@@ -1,0 +1,32 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : May 3, 2014, 3:49:43 PM
+    Author     : mileslaff
+*/
+
+#feedback {
+    font-size: 1.4em;
+}
+#resultsTable .ui-selecting {
+    background: #FECA40;
+}
+#resultsTable .ui-selected {
+    background: #F39814;
+    color: white;
+}
+#resultsTable {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 60%;
+}
+#resultsTable li {
+    margin: 3px;
+    padding: 0.4em;
+    font-size: 1.4em;
+    height: 18px;
+}

@@ -22,8 +22,8 @@ function searchName()
 function createTable(data)
 {
     //alert(JSON.stringify(data));
-    var stuff;
-    stuff = "<table id=\"resultsTable\">";
+    var resultList;
+    resultList = "<ol id=\"resultsTable\">";
     var Aloans = data['loans'];
     var loans = JSON.stringify(Aloans);
     
@@ -33,16 +33,16 @@ function createTable(data)
         var id = object.id;
 
 //alert(row);
-        stuff += "<tr><td>";
-        stuff += id;
-        stuff += "</td><td>";
-        stuff += row;   
-        stuff += "</td></tr>";   
+        resultList += "<li class=\"person\">";
+        resultList += row;
+        resultList += " ";
+        resultList += id;   
+        resultList += "</li>";   
     });
-    stuff += "</table";
-    $(".results").append(stuff);
+    resultList += "</ol>";
+    $("#results").append(resultList);
     
-    
+    $("#resultsTable").selectable();
 }
 
 

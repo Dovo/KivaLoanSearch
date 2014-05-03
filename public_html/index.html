@@ -9,7 +9,8 @@ and open the template in the editor.
         <title>Kiva Loan Search</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <script src="js/libs/jquery/jquery.js"></script>
+        <script src="js/libs/jquery/jquery.js"></script>
+        <script src="js/libs/jqueryui/jquery-ui.js"></script>
         <script src="LoanSearch.js"></script>
         <script type="text/javascript">
 /*        $(document).ready(function() {
@@ -21,12 +22,14 @@ and open the template in the editor.
             });
         });*/
         </script>
+        
+        <link rel="stylesheet" type="text/css" href="styles.css">
     </head>
     
     <body>
         <h1>Search for a Loan</h1>
         <input id="searchField" type="search" name="loansearch">
 	<input id="searchButton" type="button" name="submit" value="Search" onclick="searchName()">
-        <p class="results"></p>
+        <p id="results"></p>
     </body>
 </html>
