@@ -27,7 +27,9 @@ function createTable(data)
     var Aloans = data['loans'];
     var loans = JSON.stringify(Aloans);
     
-     $.each(JSON.parse(loans), function(index, object)
+    
+    
+    $.each(JSON.parse(loans), function(index, object)
     {
         var row = object.name;
         var id = object.id;
@@ -42,7 +44,44 @@ function createTable(data)
     resultList += "</ol>";
     $("#results").append(resultList);
     
-    $("#resultsTable").selectable();
+    $("#resultsTable").selectable({
+        selected: function(event, ui) {
+            alert("got selection");
+            $(".ui-selected", this).each(function() {
+            var resIndex = $("#resultsTable li").index(this);
+            var res = $(this).text();
+            var split = res.split(" ");
+            finalIndex = split.length;
+            //alert(resIndex);
+            //alert(split[finalIndex-1]);
+            populateDetails(split[finalIndex-1]);      
+            });
+        
+
+        }/*,
+        stop: function() {
+            alert("stopped");
+            
+        }*/
+        
+    });
+}
+
+function populateDetails(gotId)
+{
+    alert(gotId);
+    
+    var fullSearch = "http://api.kivaws.org/v1/loans/" + gotId + "/lenders.json";
+    alert(fullSearch);
+    $.getJSON(fullSearch, function(json_data)
+    {
+        alert(JSON.stringify(json_data));  
+        
+        
+    });
+    
+    
+    
 }
 
 
