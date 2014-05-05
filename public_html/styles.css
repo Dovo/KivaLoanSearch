@@ -23,10 +23,37 @@ and open the template in the editor.
     margin: 0;
     padding: 0;
     width: 60%;
+    //float: left;
 }
 #resultsTable li {
+    font-family:"Verdana", Geneva, sans-serif;
     margin: 3px;
     padding: 0.4em;
-    font-size: 1.4em;
-    height: 18px;
+    font-size: 1.1em;
+    width: 400px;
+    //height: 18px;
+    //float: left;
 }
+
+h1 {
+    color: #F39814;
+    font-family: "Verdana", Geneva, sans-serif;
+    text-align: center
+}
+
+body {
+    background-color: #B6FF91;  
+    font-family:"Verdana", Geneva, sans-serif;
+}
+
+ #popover {
+    display: none;
+    width: 300px;
+    height: 300px;
+    background: #96DC91;
+    border: 1px solid #000;
+    //float: right;
+    border:2px solid;
+    border-radius:25px;
+    box-shadow: 10px 10px 5px #888888;
+  }
