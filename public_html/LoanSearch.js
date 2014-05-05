@@ -27,7 +27,7 @@ function createTable(data)
     var Aloans = data['loans'];
     var loans = JSON.stringify(Aloans);
     
-    
+    //alert(loans);
     
     $.each(JSON.parse(loans), function(index, object)
     {
@@ -71,12 +71,57 @@ function populateDetails(gotId)
 {
     alert(gotId);
     
-    var fullSearch = "http://api.kivaws.org/v1/loans/" + gotId + "/lenders.json";
-    alert(fullSearch);
-    $.getJSON(fullSearch, function(json_data)
+    var lenderSearch = "http://api.kivaws.org/v1/loans/" + gotId + "/lenders.json";
+    alert(lenderSearch);
+    $.getJSON(lenderSearch, function(json_data)
     {
         alert(JSON.stringify(json_data));  
         
+        var lenders = json_data['lenders'];
+        var lendersString = JSON.stringify(lenders);
+        
+        var lenderList;
+        lenderList = "<div id=\"lenderTable\"> <ol id=\"lenderTable\">"; 
+        $.each(JSON.parse(lendersString), function(index, object)
+        {
+            var lenderName = object.name;
+            //alert(lenderName);
+            
+            lenderList += "<li class=\"lender\">";
+            lenderList += lenderName;
+            lenderList += "</li>";
+        });
+        lenderList += "</ol> </div>";  
+        $("#lenderBox").append(lenderList);
+    });
+    
+    var teamSearch = "http://api.kivaws.org/v1/loans/" + gotId + "/teams.json";
+    $.getJSON(teamSearch, function(json_data)
+    {
+        alert(JSON.stringify(json_data));  
+        
+        var teams = json_data['teams'];
+        var teamString = JSON.stringify(teams);
+        
+        var teamList;
+        teamList = "<div id=\"teamTable\"> <ol id=\"teamTable\">"; 
+        $.each(JSON.parse(teamString), function(index, object)
+        {
+            var teamName = object.shortname;
+            //alert(lenderName);
+            
+            teamList += "<li class=\"lender\">";
+            teamList += teamName;
+            teamList += "</li>";
+        });
+        teamList += "</ol> </div>";  
+        $("#teamBox").append(teamList);
+    
+    
+        if(JSON.parse(lendersString) === 0)
+        {
+            alert("error!");
+        }
         
     });
     
