@@ -42,11 +42,27 @@ function createTable(data)
     {
         var row = object.name;
         var id = object.id;
+        var amount = object.amount;
+        var desc = object.use;
+        var imageID = object.image.id;
+        
+        
+        //alert(imageID);
 
         resultList += "<li class=\"person\">";
+        resultList += "<img src=http://s3.kiva.org/img/s150/"
+        resultList += imageID;
+        resultList += ".jpg>";
+        resultList += "<h3>";
+        resultList += id;
+        resultList += ": ";
+        resultList += row;
+        resultList += "</h3>";
+        resultList += "<p>Your loan will help ";
         resultList += row;
         resultList += " ";
-        resultList += id;   
+        resultList += desc;
+        resultList += "</p>";
         resultList += "</li>";   
     });
     resultList += "</ol>";
@@ -62,9 +78,8 @@ function createTable(data)
             {
                 var resIndex = $("#resultsTable li").index(this);
                 var res = $(this).text();
-                var split = res.split(" ");
-                finalIndex = split.length;
-                populateDetails(split[finalIndex-1]); 
+                var split = res.split(":");
+                populateDetails(split[0]); 
             });
         }
         
@@ -83,14 +98,14 @@ function createTable(data)
 function populateDetails(gotId)
 {
     
-    //alert(gotId);
+    alert(gotId);
     
     //search Kiva for lenders to given ID and create list of results, then
     //append to HTML
     var lenderSearch = "http://api.kivaws.org/v1/loans/" + gotId + "/lenders.json";
     $.getJSON(lenderSearch, function(json_data)
     {
-        alert(JSON.stringify(json_data));  
+        //alert(JSON.stringify(json_data));  
         
         var lenders = json_data['lenders'];
         var lendersString = JSON.stringify(lenders);
@@ -142,11 +157,14 @@ function populateDetails(gotId)
     //$("#popover").dialog("open");
     
      $( "#popover" ).dialog({
+      title: "Borrower Details",
+      height: 1000,
+      width: 500,
       position: { 
-          my: "top", at: "center", of: window},
+          my: "top", at: "top", of: window},
       autoOpen: false,
       show: {
-        effect: "blind",
+        effect: "drop",
         duration: 1000
       },
       hide: {

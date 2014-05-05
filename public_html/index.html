@@ -27,15 +27,19 @@ and open the template in the editor.
     </head>
     
     <body>
-        <h1>Search for a Loan</h1>
-        <input id="searchField" type="search" name="loansearch">
-	<input id="searchButton" type="button" name="submit" value="Search" onclick="searchName()">
+        <h1 id="loanTitle">Kiva Loan Search</h1>
+        <div id="bannerThin"></div>
+        <div id="bannerTitle">
+            <h1 id="searchTitle">Search our database of 1 million+ borrowers </h1>
+        </div>
+        <div style="height:20px"></div>
+        <div id="searcher"><input id="searchField" type="search" name="loansearch" placeholder="Enter a name...">
+            <input id="searchButton" type="button" name="submit" value="Search" onclick="searchName()"></div>
         <p id="results"></p>
         
         <div id="popover">
             <p id="lenderBox"></p>
             <p id="teamBox"></p>
         </div>
-        
     </body>
 </html>
