@@ -50,7 +50,7 @@ function createTable(data)
         //alert(imageID);
 
         resultList += "<li class=\"person\">";
-        resultList += "<img src=http://s3.kiva.org/img/s150/"
+        resultList += "<img src=http://www.kiva.org/img/s150/"
         resultList += imageID;
         resultList += ".jpg>";
         resultList += "<h3>";
@@ -156,7 +156,7 @@ function populateDetails(gotId)
     //$("#popover").show("drop");
     //$("#popover").dialog("open");
     
-     $( "#popover" ).dialog({
+     /*$( "#popover" ).dialog({
       title: "Borrower Details",
       height: 1000,
       width: 500,
@@ -173,7 +173,10 @@ function populateDetails(gotId)
       }
     });
  
-    $( "#popover" ).dialog( "open" );
+    $( "#popover" ).dialog( "open" );*/
+    
+    $("#popover").show();
 }
 
-$( ".selector" ).dialog({ position: { my: "left top", at: "left bottom", of: button } });
+//correct image url
+//http://www.kiva.org/img/s150/494498.jpg
