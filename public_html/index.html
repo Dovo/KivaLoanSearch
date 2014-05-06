@@ -7,20 +7,8 @@
         <script src="js/libs/jquery/jquery.js"></script>
         <script src="js/libs/jqueryui/jquery-ui.js"></script>
         <script src="LoanSearch.js"></script>
-        <script type="text/javascript">
-/*        $(document).ready(function() {
-            $("#searchButton").keypress(function(e){
-                if(e.keyCode == 13)
-                {
-                    $("#searchButton").click();
-                }
-            });
-        });*/
-        </script>
-        
         <link rel="stylesheet" type="text/css" href="styles.css">
     </head>
-    
     <body>
         <h1 id="loanTitle">Kiva Loan Search</h1>
         <div id="bannerThin"></div>
@@ -29,13 +17,19 @@
         </div>
         <div style="height:20px"></div>
         <div id="searcher"><input id="searchField" type="search" name="loansearch" placeholder="Enter a name...">
-            <input id="searchButton" type="button" name="submit" value="Search" onclick="searchName()"></div>
-                <div style="height:20px"></div>
-                        <div id="bannerThin"></div>
-        <p id="results"></p>
-        <div id="popover">
-            <p id="lenderBox"></p>
-            <p id="teamBox"></p>
+            <input id="searchButton" type="button" name="submit" value="Search" onclick="searchName()">
+        </div>
+        <div style="height:20px"></div>
+        <div id="bannerThin"></div>
+        <div class="col-2-3">
+            <p id="results"></p>
+        </div> 
+        <div class="col-1-3">
+            <div id="popover">
+                <p id="details"></p>
+                <p id="lenderBox"></p>
+                <p id="teamBox"></p>
+            </div>
         </div>
     </body>
 </html>

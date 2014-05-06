@@ -1,9 +1,8 @@
 /* 
  * Javascript source for Kiva Lona Search webpage.
  * Includes functons for retrieving data on borrowers
- * and displaying them via HTML.
+ * and displaying them in HTML.
  */
-
 
 /*
  * Function to search by borrower name. Calls createTable to display returned
@@ -11,13 +10,16 @@
  */
 function searchName()
 {
-    alert("Searched");
+    //clear previous results data when we get a new search
     $("#results").empty();
+    $("#details").empty();
+    $("#lenderBox").empty();
+    $("#teamBox").empty();
+    
     var searchName = document.getElementById("searchField").value;
     var fullSearch = "http://api.kivaws.org/v1/loans/search.json?q=" + searchName;
     $.getJSON(fullSearch, function(json_data)
     {
-        //alert(JSON.stringify(json_data));
         createTable(json_data);
     });  
 }
@@ -28,6 +30,8 @@ function searchName()
  */
 function createTable(data)
 {
+    var divClone = $("#popover").clone();
+    
     //create string to hold HTML data for borrower list
     var resultList;
     resultList = "<ol id=\"resultsTable\">";
@@ -45,9 +49,6 @@ function createTable(data)
         var amount = object.amount;
         var desc = object.use;
         var imageID = object.image.id;
-        
-        
-        //alert(imageID);
 
         resultList += "<li class=\"person\">";
         resultList += "<img src=http://www.kiva.org/img/s150/"
@@ -73,16 +74,15 @@ function createTable(data)
     {
         selected: function(event, ui) 
         {
-            alert("got selection");
             $(".ui-selected", this).each(function() 
             {
                 var resIndex = $("#resultsTable li").index(this);
                 var res = $(this).text();
                 var split = res.split(":");
+                $("#popover").replaceWith(divClone.clone());
                 populateDetails(split[0]); 
             });
         }
-        
         /*,
         stop: function() {
             alert("stopped");  
@@ -90,36 +90,53 @@ function createTable(data)
     });
 }
 
-
 /*
  * Function takes borrower ID and param and searches for lenders and lending
  * teams, then displays data found
  */
 function populateDetails(gotId)
-{
-    
-    alert(gotId);
-    
+{   
+    var detailSearch = "http://api.kivaws.org/v1/loans/" + gotId + ".json";
+    $.getJSON(detailSearch, function(json_data)
+    {
+        var loan = json_data['loans'];
+        var loanString = JSON.stringify(loan);
+        //alert(loanString);
+        
+        $.each(JSON.parse(loanString), function(index, object)
+        {
+            var fundedAmount = object.funded_amount;
+            var loanAmount = object.loan_amount;
+            var funded = "<h4>Funded $"
+            funded += fundedAmount;
+            funded += " out of $";
+            funded += loanAmount;
+            funded += "</h4>";
+            
+            $("#details").append(funded);
+        });
+    });
+
     //search Kiva for lenders to given ID and create list of results, then
     //append to HTML
     var lenderSearch = "http://api.kivaws.org/v1/loans/" + gotId + "/lenders.json";
     $.getJSON(lenderSearch, function(json_data)
-    {
-        //alert(JSON.stringify(json_data));  
-        
+    {   
         var lenders = json_data['lenders'];
         var lendersString = JSON.stringify(lenders);
         
         var lenderList;
-        lenderList = "<div id=\"lenderTable\"> <ol id=\"lenderTable\">"; 
+        lenderList = "<div id=\"lenderTable\"> <ul id=\"lenderTable\">"; 
         $.each(JSON.parse(lendersString), function(index, object)
         {
             var lenderName = object.name;
-            lenderList += "<li class=\"lender\">";
-            lenderList += lenderName;
-            lenderList += "</li>";
+            var lenderImage = object.image.id;
+            //alert(lenderImage);
+            lenderList += "<li id=\"lender\"><a href=\"#\"><img src=http://www.kiva.org/img/s50/";
+            lenderList += lenderImage;
+            lenderList += ".jpg></a></li>";
         });
-        lenderList += "</ol> </div>";  
+        lenderList += "</ul> </div>";  
         $("#lenderBox").append(lenderList);
     });
 
@@ -127,56 +144,24 @@ function populateDetails(gotId)
     //apend to HTML
     var teamSearch = "http://api.kivaws.org/v1/loans/" + gotId + "/teams.json";
     $.getJSON(teamSearch, function(json_data)
-    {
-        //alert(JSON.stringify(json_data));  
-        
+    { 
         var teams = json_data['teams'];
         var teamString = JSON.stringify(teams);
         
         var teamList;
-        teamList = "<div id=\"teamTable\"> <ol id=\"teamTable\">"; 
+        teamList = "<div id=\"teamTable\"> <ul id=\"teamTable\">"; 
         $.each(JSON.parse(teamString), function(index, object)
         {
             var teamName = object.shortname;
-            teamList += "<li class=\"lender\">";
-            teamList += teamName;
-            teamList += "</li>";
+            var teamImage = object.image.id;
+            
+            teamList += "<li id=\"lender\"><a href=\"#\"><img src=http://www.kiva.org/img/s50/";
+            teamList += teamImage;
+            teamList += ".jpg></a></li>";
         });
-        teamList += "</ol> </div>";  
+        teamList += "</ul> </div>";  
         $("#teamBox").append(teamList);
-    
-        if(JSON.parse(lendersString) === 0)
-        {
-            alert("error!");
-        }
-        
     });  
-    
-    //show final results in a <div> element
-    //$("#popover").show("drop");
-    //$("#popover").dialog("open");
-    
-     /*$( "#popover" ).dialog({
-      title: "Borrower Details",
-      height: 1000,
-      width: 500,
-      position: { 
-          my: "top", at: "top", of: window},
-      autoOpen: false,
-      show: {
-        effect: "drop",
-        duration: 1000
-      },
-      hide: {
-        effect: "explode",
-        duration: 1000
-      }
-    });
- 
-    $( "#popover" ).dialog( "open" );*/
     
     $("#popover").show();
 }
-
-//correct image url
-//http://www.kiva.org/img/s150/494498.jpg
